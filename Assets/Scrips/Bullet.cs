@@ -11,8 +11,8 @@ public class Bullet : MonoBehaviour
         transform.Translate(new Vector3(0, speed * Time.deltaTime), Space.Self);        
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-       this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 }

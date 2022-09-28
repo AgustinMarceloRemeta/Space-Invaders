@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
         shootManager = FindObjectOfType<Shoot>();
     }
 
-
     void Update()
     {
         Movement();
@@ -37,5 +36,10 @@ public class Player : MonoBehaviour
             cooldown = valueCooldown;
         }
         if (cooldown > 0) cooldown -= Time.deltaTime;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Bullet>() != null) GameManager.deathEvent?.Invoke();
     }
 }
