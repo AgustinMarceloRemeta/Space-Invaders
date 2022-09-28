@@ -21,9 +21,9 @@ public class Enemy : Player
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Bullet>() != null)
-        { 
-            Destroy(this.gameObject);
-            EnemyManager.upgradeListEvent?.Invoke();
+        {
+            EnemyManager.upgradeListEvent?.Invoke(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }

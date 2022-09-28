@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public List<GameObject> enemys;
-    public static Action upgradeListEvent;
+    public static Action<GameObject> upgradeListEvent;
     [SerializeField] float cooldownShoot;
     float cooldownReal;
     void Start()
@@ -19,12 +20,12 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        RandomShoot();
+       if(enemys.Any()) RandomShoot();
     }
 
-    void UpgradeList()
+    void UpgradeList(GameObject enemy)
     {
-        foreach (GameObject item in enemys)  if (item == null) enemys.Remove(item);    
+        enemys.Remove(enemy);     
     }
 
     void RandomShoot()
