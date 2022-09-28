@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Bullet>() != null) GameManager.deathEvent?.Invoke();
+        if (collision.gameObject.GetComponent<Bullet>() != null) GameManager.lowLifeEvent?.Invoke();
+        if (collision.gameObject.GetComponent<Enemy>() != null) GameManager.deathEvent?.Invoke(); ;
     }
 }

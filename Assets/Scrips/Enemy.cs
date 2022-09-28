@@ -22,7 +22,7 @@ public class Enemy : Player
     {
         if (collision.gameObject.GetComponent<Bullet>() != null)
         { 
-            Destroy(this);
+            Destroy(this.gameObject);
             EnemyManager.upgradeListEvent?.Invoke();
         }
     }

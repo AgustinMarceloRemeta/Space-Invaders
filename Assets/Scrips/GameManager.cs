@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static Action deathEvent;
+    public static Action lowLifeEvent, deathEvent;
     [SerializeField] int life;
     [SerializeField] float timeToDeath;
     GameObject player, playerActive;
@@ -23,13 +23,13 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void Death()
+    void Lowlife()
     {
-        if (life > 0) 
+        if (life > 0)
         {
             StartCoroutine(DestroyPlayer(timeToDeath));
         }
-        else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        else Death();
     }
 
     void InstanciatePlayer()
@@ -46,12 +46,19 @@ public class GameManager : MonoBehaviour
         InstanciatePlayer();
         life--;
     }
+
+    void Death()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     private void OnEnable()
     {
+        lowLifeEvent += Lowlife;
         deathEvent += Death;
     }
     private void OnDisable()
     {
+        lowLifeEvent -= Lowlife;
         deathEvent -= Death;
     }
 }
