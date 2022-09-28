@@ -1,23 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] float speed, valueCooldown;
-    float cooldown;
+    [SerializeField] protected float cooldown;
     [SerializeField] Transform triggerPoint;
     Shoot shootManager;
+    public bool isDeath;
 
-    void Start()
+    public virtual void Start()
     {
+        isDeath = false;
         shootManager = FindObjectOfType<Shoot>();
     }
 
     void Update()
     {
-        Movement();
-        Shooting();
+        if (!isDeath)
+        {
+            Movement();
+            if (Input.GetKey(KeyCode.Space) && cooldown <= 0) Shooting();
+            if (cooldown > 0) cooldown -= Time.deltaTime;
+        }
     }
     void Movement()
     {
@@ -25,17 +29,13 @@ public class Player : MonoBehaviour
         transform.Translate(new Vector3(speed * input * Time.deltaTime, 0));
     }
 
-    void Shooting()
+    public virtual void Shooting()
     {
-        if (Input.GetKey(KeyCode.Space) && cooldown<= 0)
-        {
-            GameObject bullet = shootManager.GetNewBullet();
-            bullet.transform.position = triggerPoint.position;
-            bullet.transform.rotation = triggerPoint.rotation;
-            bullet.SetActive(true);
-            cooldown = valueCooldown;
-        }
-        if (cooldown > 0) cooldown -= Time.deltaTime;
+     GameObject bullet = shootManager.GetNewBullet();
+     bullet.transform.position = triggerPoint.position;
+     bullet.transform.rotation = triggerPoint.rotation;
+     bullet.SetActive(true);
+     cooldown = valueCooldown;   
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

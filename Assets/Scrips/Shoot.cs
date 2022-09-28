@@ -15,7 +15,6 @@ public class Shoot : MonoBehaviour
         else instance = this;
     }
 
-
     void Start()
     {
         InstanciateBullets();

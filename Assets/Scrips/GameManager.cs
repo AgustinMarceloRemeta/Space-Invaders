@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float timeToDeath;
     GameObject player, playerActive;
     [SerializeField] Vector3 spawnPosition;
+    
     void Start()
     {
         player = Resources.Load<GameObject>("Prefabs/Player");
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     IEnumerator DestroyPlayer(float time)
     {
         playerActive.GetComponent<SpriteRenderer>().color = Color.red;
+        playerActive.GetComponent<Player>().isDeath = true;
         yield return new WaitForSeconds(time);
         Destroy(playerActive);
         InstanciatePlayer();
