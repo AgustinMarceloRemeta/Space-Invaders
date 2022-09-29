@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : Player
 {
+    [SerializeField] float movDown, initCooldown;
     public override void Start()
     {
         base.Start();
@@ -11,6 +12,8 @@ public class Enemy : Player
 
     void Update()
     {
+        if (initCooldown > 0) initCooldown -= Time.deltaTime;
+        if (initCooldown <= 0) Movement();
     }
 
     public override void Shooting()
@@ -18,12 +21,25 @@ public class Enemy : Player
         base.Shooting();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Bullet>() != null)
+        
+        if (collision.gameObject.name == "Bullet(Clone)" && collision.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0)
         {
             EnemyManager.upgradeListEvent?.Invoke(this.gameObject);
+            collision.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
         }
+        if (collision.gameObject.name == "Limit")
+        {
+            speed *= -1;
+            this.transform.position = this.transform.position - new Vector3(0, movDown);
+        }
     }
+
+    void Movement()
+    {
+        transform.Translate(new Vector2(speed*Time.deltaTime, 0));
+    }
+
 }

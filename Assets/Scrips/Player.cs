@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float speed, valueCooldown;
+    [SerializeField] protected float speed, valueCooldown, proyectilSpeed;
     [SerializeField] protected float cooldown;
     [SerializeField] Transform triggerPoint;
     Shoot shootManager;
@@ -35,12 +35,17 @@ public class Player : MonoBehaviour
      bullet.transform.position = triggerPoint.position;
      bullet.transform.rotation = triggerPoint.rotation;
      bullet.SetActive(true);
+     bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, proyectilSpeed));
      cooldown = valueCooldown;   
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Bullet>() != null) GameManager.lowLifeEvent?.Invoke();
+        if (collision.gameObject.name == "Bullet(Clone)")
+        {
+            GameManager.lowLifeEvent?.Invoke();
+            collision.gameObject.SetActive(false);
+        }
         if (collision.gameObject.GetComponent<Enemy>() != null) GameManager.deathEvent?.Invoke(); ;
     }
 }

@@ -28,7 +28,7 @@ public class Shoot : MonoBehaviour
         for (int i = 0; i < amountToPool; i++)
         {
             newObject = Instantiate(bullet);
-            bullet.SetActive(false);
+            newObject.SetActive(false);
             bullets.Add(newObject);
         }
     }

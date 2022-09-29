@@ -83,7 +83,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   valueCooldown: 2
+  proyectilSpeed: 100
+  cooldown: 0
   triggerPoint: {fileID: 7448474414990366473}
+  isDeath: 0
 --- !u!212 &7448474415626831705
 SpriteRenderer:
   m_ObjectHideFlags: 0

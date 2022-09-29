@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public List<GameObject> enemys;
+    [SerializeField] List<GameObject> enemys;
+    [SerializeField] List<Vector2> positions;
     public static Action<GameObject> upgradeListEvent;
     [SerializeField] float cooldownShoot;
     float cooldownReal;
+    GameObject enemy;
     void Start()
     {
-        foreach  (Enemy item in FindObjectsOfType<Enemy>())
-        {
-            enemys.Add(item.gameObject);
-        } 
+        instanciateEnemys();
     }
 
     void Update()
@@ -37,6 +36,19 @@ public class EnemyManager : MonoBehaviour
             cooldownReal = cooldownShoot;
         }
         if (cooldownReal > 0) cooldownReal -= Time.deltaTime;
+    }
+
+    void instanciateEnemys()
+    {
+        enemy = Resources.Load<GameObject>("Prefabs/Enemy");
+        GameObject newObject;
+
+        for (int i = 0; i < positions.Count; i++)
+        {
+            newObject = Instantiate(enemy);
+            newObject.transform.position = positions[i];
+            enemys.Add(newObject);
+        }
     }
 
     private void OnEnable()
