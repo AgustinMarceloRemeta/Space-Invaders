@@ -8,12 +8,12 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] List<GameObject> enemys;
     [SerializeField] List<Vector2> positions;
     public static Action<GameObject> upgradeListEvent;
-    [SerializeField] float cooldownShoot;
+    [SerializeField] float cooldownShoot, timeToInit;
     float cooldownReal;
     GameObject enemy;
     void Start()
     {
-        instanciateEnemys();
+       Invoke("instanciateEnemys", timeToInit);
     }
 
     void Update()
