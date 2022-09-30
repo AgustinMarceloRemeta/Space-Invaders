@@ -1,26 +1,37 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static Action lowLifeEvent, deathEvent;
+    public static Action lowLifeEvent, deathEvent, addScoreEvent;
     [SerializeField] int life;
-    [SerializeField] float timeToDeath;
+    [SerializeField] float timeToDeath; 
+    int score;
     GameObject player, playerActive;
     [SerializeField] Vector3 spawnPosition;
+    [SerializeField] Text scoreText, lifeText;
     
     void Start()
     {
+        score = 0;
         player = Resources.Load<GameObject>("Prefabs/Player");
         InstanciatePlayer();
+        UpdateUi();
     }
 
-
-    void Update()
+    void AddScore()
     {
-        
+        score++;
+        UpdateUi();
+    }
+
+    private void UpdateUi()
+    {
+        scoreText.text = "Score: " + score;
+        lifeText.text = "x" + life;
     }
 
     void Lowlife()
@@ -45,6 +56,7 @@ public class GameManager : MonoBehaviour
         Destroy(playerActive);
         InstanciatePlayer();
         life--;
+        UpdateUi();
     }
 
     void Death()
@@ -55,10 +67,12 @@ public class GameManager : MonoBehaviour
     {
         lowLifeEvent += Lowlife;
         deathEvent += Death;
+        addScoreEvent += AddScore;
     }
     private void OnDisable()
     {
         lowLifeEvent -= Lowlife;
         deathEvent -= Death;
+        addScoreEvent -= AddScore;
     }
 }

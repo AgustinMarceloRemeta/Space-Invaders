@@ -26,6 +26,7 @@ public class Enemy : Player
         
         if (collision.gameObject.name == "Bullet(Clone)" && collision.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0)
         {
+            GameManager.addScoreEvent?.Invoke();
             EnemyManager.upgradeListEvent?.Invoke(this.gameObject);
             collision.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
