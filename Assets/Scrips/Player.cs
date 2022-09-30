@@ -46,6 +46,6 @@ public class Player : MonoBehaviour
             GameManager.lowLifeEvent?.Invoke();
             collision.gameObject.SetActive(false);
         }
-        if (collision.gameObject.GetComponent<Enemy>() != null) GameManager.deathEvent?.Invoke(); ;
+        if (collision.gameObject.GetComponent<Enemy>() != null) GameManager.endGameEvent?.Invoke("Game over");
     }
 }
