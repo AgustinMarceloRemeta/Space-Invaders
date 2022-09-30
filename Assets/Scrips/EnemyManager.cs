@@ -9,8 +9,10 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] List<Vector2> positions;
     public static Action<GameObject> upgradeListEvent;
     [SerializeField] float cooldownShoot, timeToInit;
+    [SerializeField] int minSpawn, maxSpawn;
     float cooldownReal;
     GameObject enemy;
+    public List<int> spawns;
     void Start()
     {
        Invoke("instanciateEnemys", timeToInit);
@@ -41,13 +43,26 @@ public class EnemyManager : MonoBehaviour
 
     void instanciateEnemys()
     {
+        
+        int cantEnemy = UnityEngine.Random.Range(minSpawn, maxSpawn);
+        for (int i = 0; i < cantEnemy;)
+        {
+            int random = UnityEngine.Random.Range(0, positions.Count);
+           
+            if ( !spawns.Contains(random))
+            {
+                spawns.Add(random);
+                i++;
+            }
+        }
+
         enemy = Resources.Load<GameObject>("Prefabs/Enemy");
         GameObject newObject;
 
-        for (int i = 0; i < positions.Count; i++)
+        for (int i = 0; i < spawns.Count; i++)
         {
             newObject = Instantiate(enemy);
-            newObject.transform.position = positions[i];
+            newObject.transform.position = positions[spawns[i]];
             enemys.Add(newObject);
         }
     }

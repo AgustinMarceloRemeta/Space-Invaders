@@ -139,6 +139,8 @@ MonoBehaviour:
   isDeath: 0
   movDown: 1
   initCooldown: 1
+  upSpeed: 0.5
+  timeToUpSpeed: 1
 --- !u!61 &2430605570276948094
 BoxCollider2D:
   m_ObjectHideFlags: 0

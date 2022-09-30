@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Enemy : Player
 {
-    [SerializeField] float movDown, initCooldown;
+    [SerializeField] float movDown, initCooldown, upSpeed, timeToUpSpeed;
     public override void Start()
     {
         base.Start();
+        StartCoroutine(UpSpeed(timeToUpSpeed));
     }
 
     void Update()
@@ -41,6 +42,14 @@ public class Enemy : Player
     void Movement()
     {
         transform.Translate(new Vector2(speed*Time.deltaTime, 0));
+    }
+
+    IEnumerator UpSpeed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (speed > 0) speed += upSpeed;
+        else speed -= upSpeed;
+        StartCoroutine(UpSpeed(time));
     }
 
 }

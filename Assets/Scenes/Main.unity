@@ -218,8 +218,11 @@ MonoBehaviour:
   - {x: -2, y: 8}
   - {x: -4, y: 8}
   - {x: -6, y: 8}
-  cooldownShoot: 5
+  cooldownShoot: 2
   timeToInit: 2
+  minSpawn: 5
+  maxSpawn: 20
+  spawns: 
 --- !u!114 &48778355
 MonoBehaviour:
   m_ObjectHideFlags: 0
