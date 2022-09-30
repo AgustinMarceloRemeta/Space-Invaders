@@ -19,12 +19,12 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         if (enemys.Any()) RandomShoot();
-        else if (timeToInit < 0 && !enemys.Any()) GameManager.endGameEvent?.Invoke("You Win");
     }
 
     void UpgradeList(GameObject enemy)
     {
-        enemys.Remove(enemy);     
+        enemys.Remove(enemy);
+        if (!enemys.Any()) GameManager.endGameEvent?.Invoke("You Win");
     }
 
     void RandomShoot()
