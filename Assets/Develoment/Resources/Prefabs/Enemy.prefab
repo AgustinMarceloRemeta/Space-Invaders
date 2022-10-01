@@ -133,12 +133,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   valueCooldown: 1
-  proyectilSpeed: -300
-  cooldown: 0
+  projectileSpeed: -300
   triggerPoint: {fileID: 7798923556553856372}
   isDeath: 0
   movDown: 1
-  initCooldown: 1
+  initialCooldown: 0
   upSpeed: 0.5
   timeToUpSpeed: 1
 --- !u!61 &2430605570276948094

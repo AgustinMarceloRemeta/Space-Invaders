@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-     public static AudioManager instance { get; private set; }
+    public static AudioManager instance { get; private set; }
     public static Action<string> instanceSound;
     [SerializeField]AudioSource shoot, deadEnemy;
+
     void Start()
     {
         if (instance != null && instance != this) Destroy(this.gameObject);
@@ -17,14 +17,11 @@ public class AudioManager : MonoBehaviour
     void InstanceSound(string type)
     {
         if (type == "shoot") shoot.Play();
-        if (type == "enemy") deadEnemy.Play();
+        else if (type == "enemy") deadEnemy.Play();
     }
-    private void OnEnable()
-    {
-        instanceSound += InstanceSound;
-    }
-    private void OnDisable()
-    {
-        instanceSound -= InstanceSound;
-    }
+
+    private void OnEnable() =>  instanceSound += InstanceSound;
+   
+    private void OnDisable() => instanceSound -= InstanceSound;
+    
 }

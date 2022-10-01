@@ -13,11 +13,9 @@ public class EnemyManager : MonoBehaviour
     float cooldownReal;
     GameObject enemy;
     public List<int> spawns;
-    void Start()
-    {
-       Invoke("instanciateEnemys", timeToInit);
-    }
 
+    void Start() => Invoke("instanciateEnemys", timeToInit);
+ 
     void Update()
     {
         if (enemys.Any()) RandomShoot();
@@ -38,27 +36,24 @@ public class EnemyManager : MonoBehaviour
             if (enemySelected != null) enemySelected.GetComponent<Enemy>().Shooting();
             cooldownReal = cooldownShoot;
         }
-        if (cooldownReal > 0) cooldownReal -= Time.deltaTime;
+        else if (cooldownReal > 0) cooldownReal -= Time.deltaTime;
     }
 
     void instanciateEnemys()
-    {
-        
-        int cantEnemy = UnityEngine.Random.Range(minSpawn, maxSpawn);
-        for (int i = 0; i < cantEnemy;)
+    {  
+        int amountEnemy = UnityEngine.Random.Range(minSpawn, maxSpawn);
+        for (int i = 0; i < amountEnemy;)
         {
             int random = UnityEngine.Random.Range(0, positions.Count);
            
-            if ( !spawns.Contains(random))
+            if (!spawns.Contains(random))
             {
                 spawns.Add(random);
                 i++;
             }
         }
-
         enemy = Resources.Load<GameObject>("Prefabs/Enemy");
         GameObject newObject;
-
         for (int i = 0; i < spawns.Count; i++)
         {
             newObject = Instantiate(enemy);
@@ -67,12 +62,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        upgradeListEvent += UpgradeList;
-    }
-    private void OnDisable()
-    {
-        upgradeListEvent -= UpgradeList;
-    }
+    private void OnEnable() => upgradeListEvent += UpgradeList;
+
+    private void OnDisable() => upgradeListEvent -= UpgradeList;   
 }

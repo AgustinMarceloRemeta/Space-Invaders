@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] protected float speed, valueCooldown, proyectilSpeed;
-    [SerializeField] protected float cooldown;
+    [SerializeField] protected float speed, valueCooldown, projectileSpeed;
+    protected float cooldown;
     [SerializeField] Transform triggerPoint;
     Shoot shootManager;
     public bool isDeath;
@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
             if (cooldown > 0) cooldown -= Time.deltaTime;
         }
     }
+
     void Movement()
     {
         float input = Input.GetAxis("Horizontal");
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour
      bullet.transform.position = triggerPoint.position;
      bullet.transform.rotation = triggerPoint.rotation;
      bullet.SetActive(true);
-     bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, proyectilSpeed));
+     bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, projectileSpeed));
      cooldown = valueCooldown;   
     }
 
@@ -44,8 +45,8 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Bullet(Clone)")
         {
-            GameManager.lowLifeEvent?.Invoke();
-            collision.gameObject.SetActive(false);
+          if(!isDeath) GameManager.lowLifeEvent?.Invoke();
+          collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.GetComponent<Enemy>() != null) GameManager.endGameEvent?.Invoke("Game over");
     }

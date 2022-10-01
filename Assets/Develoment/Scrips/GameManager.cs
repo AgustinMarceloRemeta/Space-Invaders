@@ -9,15 +9,14 @@ public class GameManager : MonoBehaviour
     public static Action lowLifeEvent, addScoreEvent;
     public static Action<string> endGameEvent;
     [SerializeField] int life;
-    [SerializeField] float timeToDeath; 
+    [SerializeField] float timeToDeath, resetTime; 
     int score;
     GameObject player, playerActive;
     [SerializeField] Vector3 spawnPosition;
-    [SerializeField] Text scoreText, lifeText,deadOrWinText;
+    [SerializeField] Text scoreText, lifeText, deadOrWinText;
     
     void Start()
     {
-        Time.timeScale = 1;
         score = 0;
         player = Resources.Load<GameObject>("Prefabs/Player");
         InstanciatePlayer();
@@ -38,18 +37,12 @@ public class GameManager : MonoBehaviour
 
     void Lowlife()
     {
-        if (life > 0)
-        {
-            StartCoroutine(DestroyPlayer(timeToDeath));
-        }
+        if (life > 0) StartCoroutine(DestroyPlayer(timeToDeath)); 
         else EndGame("Game over");
     }
 
-    void InstanciatePlayer()
-    {
-      playerActive = Instantiate(player, spawnPosition, Quaternion.identity);
-    }
-
+    void InstanciatePlayer() => playerActive = Instantiate(player, spawnPosition, Quaternion.identity);
+    
     IEnumerator DestroyPlayer(float time)
     {
         playerActive.GetComponent<SpriteRenderer>().color = Color.red;
@@ -67,7 +60,7 @@ public class GameManager : MonoBehaviour
         foreach (Enemy item in FindObjectsOfType<Enemy>()) item.enabled = false;
         FindObjectOfType<Player>().enabled = false;
         FindObjectOfType<EnemyManager>().enabled = false;
-        StartCoroutine(Reset(5));
+        StartCoroutine(Reset(resetTime));
     }
 
     private IEnumerator Reset(float time)
@@ -75,12 +68,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     private void OnEnable()
     {
         lowLifeEvent += Lowlife;
         endGameEvent = EndGame;
         addScoreEvent += AddScore;
     }
+
     private void OnDisable()
     {
         lowLifeEvent -= Lowlife;
