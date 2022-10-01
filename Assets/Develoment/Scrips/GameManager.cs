@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void ToMenu() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+
     private void OnEnable()
     {
         lowLifeEvent += Lowlife;
