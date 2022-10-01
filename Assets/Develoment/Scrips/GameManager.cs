@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     GameObject player, playerActive;
     [SerializeField] Vector3 spawnPosition;
     [SerializeField] Text scoreText, lifeText, deadOrWinText;
-    
+     
     void Start()
     {
-        score = 0;
+        score = PlayerPrefs.GetInt("Score",0);
         player = Resources.Load<GameObject>("Prefabs/Player");
         InstanciatePlayer();
         UpdateUi();
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         if (life > 0) StartCoroutine(DestroyPlayer(timeToDeath)); 
         else EndGame("Game over");
     }
-
+     
     void InstanciatePlayer() => playerActive = Instantiate(player, spawnPosition, Quaternion.identity);
     
     IEnumerator DestroyPlayer(float time)
@@ -58,8 +58,10 @@ public class GameManager : MonoBehaviour
     {
         deadOrWinText.text = endText;
         foreach (Enemy item in FindObjectsOfType<Enemy>()) item.enabled = false;
-        FindObjectOfType<Player>().enabled = false;
+        foreach (Player item in FindObjectsOfType<Player>()) item.isDeath = true;
         FindObjectOfType<EnemyManager>().enabled = false;
+        if (endText == "Game over") PlayerPrefs.SetInt("Score", 0);
+        else PlayerPrefs.SetInt("Score", score);
         StartCoroutine(Reset(resetTime));
     }
 
