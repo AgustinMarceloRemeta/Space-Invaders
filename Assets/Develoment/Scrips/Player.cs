@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public virtual void Start()
     {
         isDeath = false;
-        shootManager = FindObjectOfType<Shoot>();
+        shootManager = Shoot.instance;
     }
 
     void Update()
