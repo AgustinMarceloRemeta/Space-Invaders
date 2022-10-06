@@ -22,7 +22,7 @@ public class Enemy : Player
     {       
         if (collision.gameObject.name == "Bullet(Clone)" && collision.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0)
         {
-            AudioManager.instanceSound("enemy");
+            AudioManager.instance.InstanceSound("shoot");
             GameManager.addScoreEvent?.Invoke();
             EnemyManager.upgradeListEvent?.Invoke(this.gameObject);
             collision.gameObject.SetActive(false);

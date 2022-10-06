@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     public virtual void Shooting()
     {
-     AudioManager.instanceSound("shoot");
+        AudioManager.instance.InstanceSound("shoot");
      GameObject bullet = shootManager.GetNewBullet();
      bullet.transform.position = triggerPoint.position;
      bullet.transform.rotation = triggerPoint.rotation;
