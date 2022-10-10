@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Bullet(Clone)")
         {
-          if(!isDeath) GameManager.lowLifeEvent?.Invoke();
+          if(!isDeath) GameManager.lifeDownEvent?.Invoke();
           collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.GetComponent<Enemy>() != null) GameManager.endGameEvent?.Invoke("Game over");

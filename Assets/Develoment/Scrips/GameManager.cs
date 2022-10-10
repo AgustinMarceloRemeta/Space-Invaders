@@ -6,19 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static Action lowLifeEvent, addScoreEvent;
+    public static Action lifeDownEvent, addScoreEvent;
     public static Action<string> endGameEvent;
     [SerializeField] int life;
     [SerializeField] float timeToDeath, resetTime; 
     int score;
-    GameObject player, playerActive;
+    GameObject playerPrefabs, playerActive;
     [SerializeField] Vector3 spawnPosition;
     [SerializeField] Text scoreText, lifeText, deadOrWinText;
      
     void Start()
     {
         score = PlayerPrefs.GetInt("Score",0);
-        player = Resources.Load<GameObject>("Prefabs/Player");
+        playerPrefabs = Resources.Load<GameObject>("Prefabs/Player");
         InstanciatePlayer();
         UpdateUi();
     }
@@ -35,13 +35,13 @@ public class GameManager : MonoBehaviour
         lifeText.text = "x" + life;
     }
 
-    void Lowlife()
+    void LifeDown()
     {
         if (life > 0) StartCoroutine(DestroyPlayer(timeToDeath)); 
         else EndGame("Game over");
     }
      
-    void InstanciatePlayer() => playerActive = Instantiate(player, spawnPosition, Quaternion.identity);
+    void InstanciatePlayer() => playerActive = Instantiate(playerPrefabs, spawnPosition, Quaternion.identity);
     
     IEnumerator DestroyPlayer(float time)
     {
@@ -75,14 +75,14 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        lowLifeEvent += Lowlife;
-        endGameEvent = EndGame;
+        lifeDownEvent += LifeDown;
+        endGameEvent += EndGame;
         addScoreEvent += AddScore;
     }
 
     private void OnDisable()
     {
-        lowLifeEvent -= Lowlife;
+        lifeDownEvent -= LifeDown;
         endGameEvent -= EndGame;
         addScoreEvent -= AddScore;
     }

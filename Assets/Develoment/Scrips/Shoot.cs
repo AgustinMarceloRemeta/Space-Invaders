@@ -14,9 +14,9 @@ public class Shoot : MonoBehaviour
         else instance = this;
     }
 
-    void Start() => InstanciateBullets();
+    void Start() => InstantiateBullets();
 
-    private void InstanciateBullets()
+    private void InstantiateBullets()
     {
         bullet = Resources.Load<GameObject>("Prefabs/Bullet");
         GameObject newObject;
